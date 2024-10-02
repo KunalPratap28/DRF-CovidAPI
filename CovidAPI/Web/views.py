@@ -13,13 +13,11 @@ def getCovidData(request):
         data=response.json()
         df = pd.DataFrame(data)
         selected_columns=['country','cases','deaths','recovered']
-        df[selected_columns].to_csv("covid_data.csv", index=False)
+        df=df[selected_columns]
         top_countries = df.sort_values(by='cases', ascending=False).head(5)
-        top_countries = top_countries[['country', 'cases']]
-        top_countries_list = top_countries.to_dict(orient='records')
+        top_countries.to_csv("covid_data.csv",index=False)
         return Response({
             "message": "Data saved to'covid_data.csv'",
-            "top_5_countries": top_countries_list
         })
 
 
